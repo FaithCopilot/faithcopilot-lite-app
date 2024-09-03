@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "wrangler pages dev .",
+    "dev": "wrangler pages dev ./public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
