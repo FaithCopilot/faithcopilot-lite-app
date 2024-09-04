@@ -1,5 +1,10 @@
 $(document).ready(function() {
-    document['message_history'] = [];
+    document.message_history = [];
+    document.autoscroll = false;
+
+    $(window).on('scroll', function() {
+        document.autoscroll = false;
+    });
 
     function addBubble(role, message, spinner = false) {
         var suffix = role === 'user' ? 'user' : 'assistant';
@@ -42,6 +47,7 @@ $(document).ready(function() {
                 })
             })
             .then(response => {
+                document.autoscroll = true;
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
                 let buffer = '';
@@ -94,7 +100,9 @@ $(document).ready(function() {
                                         spinner = false;
                                     }
                                     currBubble.append(assistantMessage);
-                                    $([document.documentElement, document.body]).animate({scrollTop: $('.content-speech-arrow-assistant').last().offset().top}, 500);
+                                    if (document.autoscroll) {
+                                        $([document.documentElement, document.body]).animate({scrollTop: $('.content-speech-arrow-assistant').last().offset().top}, 500);
+                                    }
                                 } catch (error) {
                                     console.error('Error parsing JSON:', error);
                                 }
