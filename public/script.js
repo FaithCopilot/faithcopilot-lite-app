@@ -1,10 +1,13 @@
 $(document).ready(function() {
-    document.message_history = [];
-    document.autoscroll = false;
+    document.messageHistory = [{ 'role': 'system', 'messsage': 'You are a helpful assistant that always responds as a Christian in a brief paragraph and justifies all answers with a relevant Bible verse.'}];
+    document.isScrolling = false;
+    document.windowScrolled = false;
 
-    $(window).on('scroll', function() {
-        document.autoscroll = false;
-    });
+    function handleWindowScroll() {
+        document.windowScrolled = true;
+    }
+
+    $(window).on('scroll', handleWindowScroll);
 
     function addBubble(role, message, spinner = false) {
         var suffix = role === 'user' ? 'user' : 'assistant';
@@ -24,13 +27,12 @@ $(document).ready(function() {
         </div>
         `;
 
-        $('.main-container').append(new_bubble);
+        $('.bubbles-container').append(new_bubble);
     }
-
 
     function handleUserInput() {
         const userMessage = $('#searchbar').val();
-        document.message_history.push({ role: 'user', content: userMessage });
+        document.messageHistory.push({ role: 'user', content: userMessage });
 
         if (userMessage.trim() !== '') {
             addBubble('user', userMessage);
@@ -42,12 +44,11 @@ $(document).ready(function() {
                 },
                 body: JSON.stringify({
                     temperature: 0.3,
-                    messages: document.message_history,
+                    messages: document.messageHistory,
                     stream: true
                 })
             })
             .then(response => {
-                document.autoscroll = true;
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
                 let buffer = '';
@@ -57,6 +58,8 @@ $(document).ready(function() {
                 function createBubble() {
                     addBubble('assistant', '', true);
                     currBubble = $('.speech-bubble-text-assistant').last();
+                    $([document.documentElement, document.body]).stop(true).scrollTop($('.content-speech-arrow-assistant').last().offset().top);
+
                 }
 
                 function processStream(resolve) {
@@ -94,21 +97,27 @@ $(document).ready(function() {
                                 try {
                                     const data = JSON.parse(jsonString);
                                     const assistantMessage = data.choices[0].delta.content.replace(/\n/g, '<br>');
-                                    document.last_message += assistantMessage
+                                    document.last_message += assistantMessage;
                                     if (spinner) {
                                         $('.spinner').remove();
                                         spinner = false;
                                     }
                                     currBubble.append(assistantMessage);
-                                    if (document.autoscroll) {
-                                        $([document.documentElement, document.body]).animate({scrollTop: $('.content-speech-arrow-assistant').last().offset().top}, 500);
+
+                                    if (!document.isScrolling && !document.windowScrolled) {
+                                        document.isScrolling = true;
+
+                                        $([document.documentElement, document.body]).animate({
+                                            scrollTop: $('.content-speech-arrow-assistant').last().offset().top
+                                        }, 500, function() {
+                                            document.isScrolling = false;
+                                        });
                                     }
                                 } catch (error) {
                                     console.error('Error parsing JSON:', error);
                                 }
                             }
                         });
-
                         processStream(resolve);
                     }).catch(error => {
                         console.error('Error reading stream:', error);
@@ -126,7 +135,8 @@ $(document).ready(function() {
                 return new Promise(resolve => {
                     processStream(resolve);
                 }).then(() => {
-                    document.message_history.push({ role: 'assistant', content: document.last_message });
+                    document.messageHistory.push({ role: 'assistant', content: document.last_message });
+                    document.windowScrolled = false;
                 });
             })
             .catch(error => {

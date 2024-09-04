@@ -4,10 +4,11 @@ body {
 
 .main-container {
   font-family: "Kanit", sans-serif;
-  margin: 2.5em;
+  margin: auto;
   padding: .5em;
   position: relative;
-  width: 50%;
+  width: 55%;
+  text-align: -webkit-center;
 }
 
 .spinner {
@@ -19,16 +20,16 @@ body {
   padding: 0;
   color: #202084;
   position:relative;
-  margin-bottom: 1.25em;
-  margin-right: 25%;
+  margin-right: 15%;
+  min-width: -webkit-fill-available;
 }
 .content-container-assistant {
   width: 75%;
   padding: 0;
   color: #202084;
   position:relative;
-  margin-bottom: 1.25em;
-  margin-left: 25%;
+  margin-left: 15%;
+  min-width: -webkit-fill-available;
 }
 
 .speech-bubble-top-user {
@@ -48,6 +49,7 @@ body {
 
 .speech-bubble-text-user {
   font-size: 1.1em;
+  text-align: left;
   margin: .25em 0 0 1em;
   padding: .5em;
 }
@@ -110,23 +112,29 @@ body {
   border-bottom: 1em solid transparent;
 }
 
+.header-container {
+  text-align: center;
+}
+
 h1 {
-    font-size: 5em;
+    font-size: 3rem;
     color: whitesmoke;
     text-shadow: 0 0 8px #fff1c6;
+    margin-bottom: .15em;
 }
 
 .searchbar-container {
   display: flex;
   color: whitesmoke;
-  margin-bottom: 2em;
+  margin-bottom: 3em;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 #searchbar {
     font-size: 1.75em;
-    width: 75%;
+    width: 100%;
     margin: auto;
     background: none;
     border: none;
@@ -146,7 +154,7 @@ h1 {
     align-items: center;
     justify-content: flex-end;
     gap: 0.5em;
-    width: 32em;
+    width: 100%;
 }
 
 .button {
