@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    document.messageHistory = [{ 'role': 'system', 'messsage': 'You are a helpful assistant that always responds as a Christian in a sentence and then justifies all answers with a relevant Bible verse.'}];
+    document.messageHistory = [{ 'role': 'system', 'messsage': 'You are a helpful assistant that always responds as a Christian in 3 or 4 sentences and then justifies all answers with a relevant Bible verse.'}];
     document.isScrolling = false;
     document.windowScrolled = false;
 
