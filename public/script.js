@@ -9,6 +9,16 @@ $(document).ready(function() {
 
     $(window).on('scroll', handleWindowScroll);
 
+    function sanitizeInput(input) {
+        return input
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;")
+            .replace(/\//g, "&#x2F;");
+    }
+
     function addBubble(role, message, spinner = false) {
         var suffix = role === 'user' ? 'user' : 'assistant';
         if ( spinner ) {
@@ -31,7 +41,9 @@ $(document).ready(function() {
     }
 
     function handleUserInput() {
-        const userMessage = $('#searchbar').val();
+        let userMessage = $('#searchbar').val();
+        userMessage = sanitizeInput(userMessage);
+
         document.messageHistory.push({ role: 'user', content: userMessage });
 
         if (userMessage.trim() !== '') {
