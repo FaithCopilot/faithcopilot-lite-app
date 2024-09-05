@@ -5,10 +5,17 @@ body {
 .main-container {
   font-family: "Kanit", sans-serif;
   margin: auto;
-  padding: .5em;
+  padding: 20;
   position: relative;
-  width: 55%;
+  width: 100%;
   text-align: -webkit-center;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    /* Styles for medium screens and larger (e.g., tablets and up) */
+    width: 50%;
+  }
 }
 
 .spinner {
