@@ -163,6 +163,7 @@ $(document).ready(function() {
             });
         }
 
+        $('#searchbar').val('');
         $('.glass').css('visibility', 'visible');
     }
 
