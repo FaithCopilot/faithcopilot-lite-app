@@ -2,13 +2,6 @@ $(document).ready(function() {
     document.messageHistory = [{ role: 'system', content: 'You are a helpful assistant that always responds as a Christian in 3 or 4 sentences and then justifies all answers with a relevant Bible verse. Start each response with kindly acknowledging my next prompt in some way. End each response with helpful follow up question.'}];
     document.headerScrolled = false;
 
-    // Make this be CSS
-    // if ( $(window).width() < 1440 ) {
-    //     $('header').css('margin-top', '33%');
-    // } else {
-    //     $('header').css('margin-top', '21%');
-    // }
-
 
     function sanitizeInput(input) {
         return input
@@ -170,7 +163,6 @@ $(document).ready(function() {
             });
         }
 
-        $('#searchbar').val('').focus();
         $('.glass').css('visibility', 'visible');
     }
 
