@@ -1,13 +1,7 @@
 $(document).ready(function() {
     document.messageHistory = [{ role: 'system', content: 'You are a helpful assistant that always responds as a Christian in 3 or 4 sentences and then justifies all answers with a relevant Bible verse. Start each response with kindly acknowledging my next prompt in some way. End each response with helpful follow up question.'}];
-    document.isScrolling = false;
-    document.windowScrolled = false;
+    document.headerScrolled = false;
 
-    function handleWindowScroll() {
-        document.windowScrolled = true;
-    }
-
-    $(window).on('scroll', handleWindowScroll);
 
     function sanitizeInput(input) {
         return input
@@ -18,6 +12,7 @@ $(document).ready(function() {
             .replace(/'/g, "&#39;")
             .replace(/\//g, "&#x2F;");
     }
+
 
     function addBubble(role, message, spinner = false) {
         var suffix = role === 'user' ? 'user' : 'assistant';
@@ -40,7 +35,16 @@ $(document).ready(function() {
         $('.bubbles-container').append(new_bubble);
     }
 
+
     function handleUserInput() {
+        if ( document.headerScrolled === false ) {
+            $('header').addClass('header-shrink');
+            $('.glass').css('visibility', 'visible');
+            $('h1').css('top', 400);
+            $('header').css('margin-top', '');
+            document.headerScrolled = true;
+        }
+
         let userMessage = $('#searchbar').val();
         userMessage = sanitizeInput(userMessage);
 
@@ -159,15 +163,14 @@ $(document).ready(function() {
             });
         }
 
-        $('#searchbar').val('').focus();
+        $('#searchbar').val('');
+        $('.glass').css('visibility', 'visible');
     }
-
 
 
     $('#ask-button').on('click', function() {
         handleUserInput();
     });
-
 
 
     $('#searchbar').on('keypress', function(event) {
