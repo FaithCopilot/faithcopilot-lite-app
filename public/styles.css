@@ -2,6 +2,8 @@ body {
     background-color: #202084;
     justify-content: center;
     display: flex;
+    width: 100%;
+    margin: 0;
 }
 
 .main-container {
@@ -23,9 +25,14 @@ header {
 }
 
 
-@media (max-width: 1439px) {
+@media (max-width: 767px) {
   header {
       margin-top: 33%;
+      width: 92%;
+  }
+
+  .bubbles-container {
+    width: 65%;
   }
 }
 
@@ -44,7 +51,7 @@ header {
 }
 
 .bubbles-container {
-  width: 65%;
+  width: 82%;
 }
 
 .glass {
@@ -196,6 +203,7 @@ h1 {
 .searchbar-wrapper {
     background-color: #673AB760;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 0 8px whitesmoke;
     border: .1em solid whitesmoke;
     border-radius: 8px;
